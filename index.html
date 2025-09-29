@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jharkhand Smart Tourism - AI-Powered Travel Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff87;
+            --primary-dark: #00cc6a;
+            --secondary: #ff6b35;
+            --accent: #7c3aed;
+            --bg-dark: #0a0a0a;
+            --bg-darker: #050505;
+            --bg-light: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        .bg-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+            opacity: 0.3;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            from { transform: translateY(100vh) rotate(0deg); }
+            to { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        /* Glassmorphism Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo::before {
+            content: '✦';
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-nav {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+            color: var(--bg-dark) !important;
+            padding: 0.75rem 2rem !important;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 255, 135, 0.3);
+        }
+
+        .cta-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 255, 135, 0.5);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary)) !important;
+        }
+
+        /* Hero Section with 3D Elements */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--bg-dark);
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 255, 135, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 255, 135, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            color: var(--text-primary);
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px var(--shadow);
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Modern Section Styling */
+        section {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Features Grid with Modern Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 5rem 0;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 60px var(--shadow);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 255, 135, 0.3);
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Destinations with Hover Effects */
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 5rem 0;
+        }
+
+        .destination-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .destination-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px var(--shadow);
+        }
+
+        .destination-image {
+            height: 250px;
+            background: linear-gradient(45deg, var(--primary), var(--accent), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .destination-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,0,0,0.3), transparent);
+        }
+
+        .destination-info {
+            padding: 2rem;
+        }
+
+        .destination-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .destination-description {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .destination-features {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .feature-tag {
+            background: rgba(0, 255, 135, 0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(0, 255, 135, 0.2);
+        }
+
+        /* Technology Section */
+        .tech-section {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 5rem;
+            margin: 5rem 0;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tech-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tech-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .tech-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(0, 255, 135, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-darker);
+            border-top: 1px solid var(--glass-border);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(0, 255, 135, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            font-size: 1.5rem;
+            color: var(--bg-dark);
+        }
+
+        .chat-widget:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(0, 255, 135, 0.6);
+        }
+
+        .chat-widget::before {
+            content: '💬';
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            section {
+                padding: 4rem 1rem;
+            }
+
+            .features-grid,
+            .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-section {
+                padding: 3rem 2rem;
+                margin: 3rem 0;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="bg-particles"></div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo">
+                AaranyaJH
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#destinations">Explore</a></li>
+                <li><a href="#technology">Technology</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#app" class="cta-nav">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                ✨ AI-Powered Tourism Platform
+            </div>
+            <h1>Discover Jharkhand's Hidden Treasures</h1>
+            <p class="hero-subtitle">Experience authentic tribal culture, pristine forests, and breathtaking landscapes through our revolutionary AI-powered tourism platform</p>
+            
+            <div class="hero-actions">
+                <a href="#features" class="btn-primary">
+                    🚀 Explore Platform
+                </a>
+                <a href="#app" class="btn-secondary">
+                    📱 Download App
+                </a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Destinations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Tribal Communities</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Local Partners</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">AI Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="animate-on-scroll">
+        <div class="section-header">
+            <div class="section-badge">🎯 Smart Features</div>
+            <h2 class="section-title">Revolutionary Tourism Experience</h2>
+            <p class="section-subtitle">Powered by cutting-edge AI, Blockchain, and AR/VR technologies to transform how you explore Jharkhand</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3 class="feature-title">AI Itinerary Planner</h3>
+                <p class="feature-description">Personalized travel recommendations powered by machine learning algorithms that adapt to your preferences, budget, and interests for the perfect Jharkhand adventure.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🗣</div>
+                <h3 class="feature-title">Multilingual AI Assistant</h3>
+                <p class="feature-description">24/7 intelligent chatbot support in Hindi, English, and local tribal languages. Get instant answers and cultural insights from our AI guide.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">Blockchain Security</h3>
+                <p class="feature-description">Secure transactions and verified service providers through blockchain technology. Digital certificates ensure authentic experiences with trusted local partners.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3 class="feature-title">AR/VR Previews</h3>
+                <p class="feature-description">Immersive virtual tours of destinations before you visit. Interactive maps with augmented reality features for enhanced navigation and discovery.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🏪</div>
+                <h3 class="feature-title">Local Marketplace</h3>
+                <p class="feature-description">Direct access to tribal handicrafts, authentic homestays, and cultural experiences. Support local communities through responsible tourism.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Smart Analytics</h3>
+                <p class="feature-description">AI-driven sentiment analysis and feedback systems. Real-time tourism insights and impact monitoring for continuous platform improvement.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="destinations" class="animate-on-scroll">
+        <div class="section-header">
+            <div class="section-badge">🏔 Explore</div>
+            <h2 class="section-title">Stunning Destinations Await</h2>
+            <p class="section-subtitle">From mystical waterfalls to ancient tribal villages, discover the diverse beauty of Jharkhand</p>
+        </div>
+
+        <div class="destinations-grid">
+            <div class="destination-card">
+                <div class="destination-image">🌅</div>
+                <div class="destination-info">
+                    <h3 class="destination-title">Netarhat</h3>
+                    <p class="destination-description">The "Queen of Chhota Nagpur" offers breathtaking sunrises, cool climate, and panoramic hill views perfect for nature photography and peaceful retreats.</p>
+                    <div class="destination-features">
+                        <span class="feature-tag">Sunrise Point</span>
+                        <span class="feature-tag">Hill Station</span>
+                        <span class="feature-tag">Photography</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <div class="destination-image">🦌</div>
+                <div class="destination-info">
+                    <h3 class="destination-title">Betla National Park</h3>
+                    <p class="destination-description">Wildlife sanctuary home to tigers, elephants, and diverse flora. Enjoy safari experiences and nature photography opportunities.</p>
+                    <div class="destination-features">
+                        <span class="feature-tag">Wildlife Safari</span>
+                        <span class="feature-tag">Tiger Reserve</span>
+                        <span class="feature-tag">Adventure</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <div class="destination-image">💧</div>
+                <div class="destination-info">
+                    <h3 class="destination-title">Hundru Falls</h3>
+                    <p class="destination-description">Spectacular 98-meter waterfall surrounded by lush greenery. Perfect for adventure activities and nature lovers.</p>
+                    <div class="destination-features">
+                        <span class="feature-tag">Waterfall</span>
+                        <span class="feature-tag">Trekking</span>
+                        <span class="feature-tag">Nature</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <div class="destination-image">🛕</div>
+                <div class="destination-info">
+                    <h3 class="destination-title">Deoghar</h3>
+                    <p class="destination-description">Sacred pilgrimage site with ancient temples and rich spiritual heritage. Experience devotion and cultural traditions.</p>
+                    <div class="destination-features">
+                        <span class="feature-tag">Pilgrimage</span>
+                        <span class="feature-tag">Temples</span>
+                        <span class="feature-tag">Spiritual</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <div class="destination-image">🌊</div>
+                <div class="destination-info">
+                    <h3 class="destination-title">Patratu Valley</h3>
+                    <p class="destination-description">Picturesque valley with pristine lake and hills. Ideal for boating, picnics, and peaceful retreats.</p>
+                    <div class="destination-features">
+                        <span class="feature-tag">Lake</span>
+                        <span class="feature-tag">Boating</span>
+                        <span class="feature-tag">Peaceful</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <div class="destination-image">🏘</div>
+                <div class="destination-info">
+                    <h3 class="destination-title">Tribal Villages</h3>
+                    <p class="destination-description">Authentic cultural experiences with indigenous communities. Learn traditional crafts, music, and way of life.</p>
+                    <div class="destination-features">
+                        <span class="feature-tag">Culture</span>
+                        <span class="feature-tag">Handicrafts</span>
+                        <span class="feature-tag">Authentic</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="technology" class="tech-section">
+        <div class="section-header">
+            <div class="section-badge">⚡ Technology</div>
+            <h2 class="section-title">Cutting-Edge Technology Stack</h2>
+            <p class="section-subtitle">Built for the future of tourism with innovative technologies</p>
+        </div>
+        
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-icon">🧠</div>
+                <h3 class="tech-title">Artificial Intelligence</h3>
+                <p class="tech-description">Machine learning algorithms for personalized recommendations and predictive analytics.</p>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-icon">⛓</div>
+                <h3 class="tech-title">Blockchain</h3>
+                <p class="tech-description">Secure transactions, smart contracts, and verified service provider credentials.</p>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-icon">🥽</div>
+                <h3 class="tech-title">AR/VR Technology</h3>
+                <p class="tech-description">Immersive destination previews and enhanced on-site experiences.</p>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-icon">📱</div>
+                <h3 class="tech-title">Mobile-First Design</h3>
+                <p class="tech-description">Progressive web app with offline capabilities and native mobile applications.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="animate-on-scroll">
+        <div class="section-header">
+            <div class="section-badge">📈 Impact</div>
+            <h2 class="section-title">Platform Impact</h2>
+            <p class="section-subtitle">Transforming Jharkhand tourism through technology</p>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Tourist Destinations</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">200+</div>
+                <div class="stat-label">Local Service Providers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Tribal Communities</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">AI Assistant Support</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="animate-on-scroll">
+        <div class="section-header">
+            <div class="section-badge">🤝 Partnership</div>
+            <h2 class="section-title">Get Involved</h2>
+            <p class="section-subtitle">Partner with us to revolutionize Jharkhand tourism</p>
+        </div>
+        
+        <form class="contact-form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="category">I am a...</label>
+                <select id="category" name="category" required>
+                    <option value="">Select your category</option>
+                    <option value="tourist">Tourist/Traveler</option>
+                    <option value="service-provider">Service Provider</option>
+                    <option value="government">Government Official</option>
+                    <option value="community">Community Leader</option>
+                    <option value="developer">Developer/Partner</option>
+                    <option value="investor">Investor</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="Tell us how you'd like to contribute to Jharkhand's tourism development..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Platform</h3>
+                <a href="#features">Features</a>
+                <a href="#destinations">Destinations</a>
+                <a href="#technology">Technology</a>
+                <a href="#app">Download App</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Community</h3>
+                <a href="#">Service Providers</a>
+                <a href="#">Tribal Communities</a>
+                <a href="#">Local Artisans</a>
+                <a href="#">Tourism Officials</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Support</h3>
+                <a href="#">Help Center</a>
+                <a href="#">Safety Guidelines</a>
+                <a href="#">Responsible Tourism</a>
+                <a href="#contact">Contact Us</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Jharkhand Smart Tourism Platform. Empowering communities through technology.</p>
+        </div>
+    </footer>
+
+    <div class="chat-widget" onclick="openChat()"></div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.querySelector('.bg-particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.8)';
+            }
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your interest! We will contact you soon to discuss partnership opportunities.');
+            this.reset();
+        });
+
+        // Chat widget
+        function openChat() {
+            alert('🤖 AI Chatbot: Namaste! I can help you plan your Jharkhand adventure in Hindi, English, or local languages. How can I assist you today?');
+        }
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace('+', '').replace('/7', ''));
+                if (!isNaN(target)) {
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = counter.textContent.includes('+') ? target + '+' : 
+                                                  counter.textContent.includes('/7') ? '24/7' : target;
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.floor(current) + (counter.textContent.includes('+') ? '+' : '');
+                        }
+                    }, 50);
+                }
+            });
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        const statsSection = document.querySelector('.hero-stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Initialize particles and animations
+        window.addEventListener('load', () => {
+            createParticles();
+        });
+
+        // Add mobile menu toggle (placeholder for future implementation)
+        const mobileMenuToggle = () => {
+            // This would implement mobile menu functionality
+            console.log('Mobile menu toggle - to be implemented');
+        };
+    </script>
+</body>
+</html>
